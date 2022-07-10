@@ -4,6 +4,7 @@ import re
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
+from modeltrans.fields import TranslationField
 
 from cookie_consent.cache import delete_cache
 
@@ -33,6 +34,8 @@ class CookieGroup(models.Model):
         default=True)
     ordering = models.IntegerField(_('Ordering'), default=0)
     created = models.DateTimeField(_('Created'), auto_now_add=True, blank=True)
+    
+    i18n = TranslationField(fields=("name", "description"))
 
     class Meta:
         verbose_name = _('Cookie Group')
@@ -67,6 +70,8 @@ class Cookie(models.Model):
     path = models.TextField(_('Path'), blank=True, default="/")
     domain = models.CharField(_('Domain'), max_length=250, blank=True)
     created = models.DateTimeField(_('Created'), auto_now_add=True, blank=True)
+    
+    i18n = TranslationField(fields=("description",))
 
     class Meta:
         verbose_name = _('Cookie')
